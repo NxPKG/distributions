@@ -12,12 +12,9 @@ jobs:
       - image: ubuntu
     steps:
       - checkout
-      - run:
-          name: Check Node installation
-          command: |
-            export DEBIAN_FRONTEND=noninteractive
-            bash ./scripts/deb/setup_lts.x
-            apt-get install nodejs -y
+      - run: apt update
+      - run: bash deb/setup_16.x
+      - run: apt install nodejs -y
       - run: *envinfo
   debian-test:
     working_directory: ~/repo
@@ -25,37 +22,27 @@ jobs:
       - image: debian
     steps:
       - checkout
-      - run:
-          name: Check Node installation
-          command: |
-            bash ./scripts/deb/setup_lts.x
-            apt-get install nodejs -y
+      - run: apt update
+      - run: bash deb/setup_16.x
+      - run: apt install nodejs -y
       - run: *envinfo
-  amazonlinux-test:
+  centos-test:
     working_directory: ~/repo
     docker:
-      - image: amazonlinux:2023
+      - image: centos:7
     steps:
       - checkout
-      - run:
-          name: Check Node installation
-          environment:
-            NODE_MAJOR: 20
-          command: |
-            bash ./scripts/rpm/setup_lts.x
-            yum install nodejs -y
+      - run: bash rpm/setup_16.x
+      - run: yum install nodejs -y
       - run: *envinfo
   fedora-test:
     working_directory: ~/repo
     docker:
-      - image: fedora
+      - image: fedora:34
     steps:
       - checkout
-      - run:
-          name: Check Node installation
-          command: |
-            bash ./scripts/rpm/setup_lts.x
-            yum install nodejs -y
+      - run: bash rpm/setup_16.x
+      - run: dnf install nodejs -y
       - run: *envinfo
 
 workflows:
@@ -64,5 +51,5 @@ workflows:
     jobs:
       - ubuntu-test
       - debian-test
-      - amazonlinux-test
+      - centos-test
       - fedora-test
