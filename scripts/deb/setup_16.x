@@ -80,7 +80,7 @@ print_bold \
   The ${green}${bold}NodeSource${normal} Node.js distributions repository contains
   information both about supported versions of Node.js and supported Linux
   distributions. To learn more about usage, see the repository:
-   ${underline}${bold}https://github.com/nodesource/distributions${normal}
+   ${underline}${bold}https://github.com/nxpkg/distributions${normal}
 "
         echo
         echo "Continuing in 10 seconds ..."
